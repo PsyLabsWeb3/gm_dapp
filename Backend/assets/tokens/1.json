@@ -1,0 +1,9 @@
+{
+  "name": "MZCAL Token",
+  "description": "A fungible mezcal token for testing.",
+  "image": "https://grupoberima.com.mx/wp-content/uploads/2022/11/Guerrero-Maya-750ml-800x800-1.png",
+  "attributes": [
+    { "trait_type": "Rarity", "value": "Premium" },
+    { "trait_type": "Use", "value": "Game Currency" }
+  ]
+}

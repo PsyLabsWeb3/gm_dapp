@@ -1,0 +1,9 @@
+{
+    "name": "Agave Plant",
+    "description": "A simple defending plant.",
+    "image": "https://png.pngtree.com/png-vector/20230808/ourmid/pngtree-agave-plant-vector-png-image_6879394.png",
+    "attributes": [
+      { "trait_type": "Rarity", "value": "Common" },
+      { "trait_type": "Use", "value": "Plant" }
+    ]
+  }
