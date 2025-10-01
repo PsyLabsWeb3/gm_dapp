@@ -136,7 +136,7 @@ export function CheckEligibility() {
                   Error checking eligibility
                 </p>
                 <p className="text-red-400/70 text-sm text-center">
-                  {contractError?.message || 'Unable to connect to contract'}
+                  {(contractError as Error)?.message || 'Unable to connect to contract'}
                 </p>
               </div>
             )}

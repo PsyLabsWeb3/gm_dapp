@@ -1,5 +1,4 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import { arbitrumSepolia } from 'wagmi/chains'
 
 export function ConnectButton() {
   const { address, isConnected, chain } = useAccount()
