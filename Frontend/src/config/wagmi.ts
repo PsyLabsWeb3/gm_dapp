@@ -1,10 +1,6 @@
 import { http, createConfig } from 'wagmi'
 import { arbitrumSepolia } from 'wagmi/chains'
-import { injected, walletConnect } from 'wagmi/connectors'
-
-
-// next: adding walletconnect: https://cloud.walletconnect.com
-const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || ''
+import { injected } from 'wagmi/connectors'
 
 export const config = createConfig({
   chains: [arbitrumSepolia],
