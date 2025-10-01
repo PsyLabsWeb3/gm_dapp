@@ -13,12 +13,11 @@ export function CheckEligibility() {
   const effectiveAddress = connectedAddress || inputAddress
 
   // Call the hook to check whitelist status
-  const {
-    data: isWhitelisted,
-    isLoading,
-    isError,
-    error: contractError
-  } = useWhitelistStatus(addressToCheck as `0x${string}`)
+  const result = useWhitelistStatus(addressToCheck as `0x${string}`)
+  const isWhitelisted = result.data as boolean | undefined
+  const isLoading = result.isLoading
+  const isError = result.isError
+  const contractError = result.error as Error | null
 
   const handleCheck = () => {
     setError('')
@@ -136,7 +135,7 @@ export function CheckEligibility() {
                   Error checking eligibility
                 </p>
                 <p className="text-red-400/70 text-sm text-center">
-                  {(contractError as Error)?.message || 'Unable to connect to contract'}
+                  {contractError?.message || 'Unable to connect to contract'}
                 </p>
               </div>
             )}
