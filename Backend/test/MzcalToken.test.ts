@@ -1,12 +1,12 @@
-const { expect } = require("chai");
-const { ethers } = require("hardhat");
+import { expect } from "chai";
+import { ethers } from "hardhat";
 
 describe("MzcalToken", function () {
-    let MzcalToken, token, owner, addr1, addr2;
+    let MzcalToken: any, token: any, owner: any, addr1: any, addr2: any;
 
     beforeEach(async function () {
         [owner, addr1, addr2] = await ethers.getSigners();
-        MzcalToken = await ethers.getContractFactory("MzcalToken");
+        MzcalToken = await ethers.getContractFactory("contracts/MzcalToken.sol:MzcalToken");
         token = await MzcalToken.deploy("http://localhost:8080/tokens/{id}.json");
         await token.waitForDeployment();
     });
