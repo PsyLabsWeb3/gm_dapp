@@ -42,10 +42,14 @@ async function main() {
   
   // Save the ABI and address for frontend use
   
+  // Get the proper ABI from the contract factory
+  const contractArtifact = await artifacts.readArtifact("contracts/MzcalToken.sol:MzcalToken");
+  const abi = contractArtifact.abi;
+  
   // Save contract address to a file with network information
   const contractInfo = {
     address: address,
-    abi: token.interface.format("json"),
+    abi: abi,
     network: networkName
   };
   
@@ -53,14 +57,23 @@ async function main() {
   fs.writeFileSync("contract-addresses.txt", `MzcalToken: ${address}\nNetwork: ${networkName}`);
   
   // Save ABI to JSON file in root
-  fs.writeFileSync("mzcal_token_abi.json", JSON.stringify(token.interface.format("json"), null, 2));
+  fs.writeFileSync("mzcal_token_abi.json", JSON.stringify(abi, null, 2));
   
   // Also save to frontend directories if they exist
   if (fs.existsSync("../Frontend/src/abi")) {
-    fs.writeFileSync("../Frontend/src/abi/MzcalTokenABI.json", JSON.stringify(token.interface.format("json"), null, 2));
+    fs.writeFileSync("../Frontend/src/abi/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
     fs.writeFileSync("../Frontend/src/abi/MzcalTokenABI.js", 
-      `export const MzcalTokenABI = ${JSON.stringify(token.interface.format("json"), null, 2)};`
+      `export const MzcalTokenABI = ${JSON.stringify(abi, null, 2)};`
     );
+  }
+  
+  // Also save to the config directory (the primary location for the ABI)
+  if (fs.existsSync("../Frontend/src/config")) {
+    fs.writeFileSync("../Frontend/src/config/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
+  } else {
+    console.log("⚠️ Frontend/src/config directory does not exist. Creating it...");
+    fs.mkdirSync("../Frontend/src/config", { recursive: true });
+    fs.writeFileSync("../Frontend/src/config/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
   }
   
   console.log("\n📋 ABI and address saved to:");
