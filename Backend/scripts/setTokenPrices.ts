@@ -19,9 +19,33 @@ async function main() {
   const presalePriceEth = process.env.PRESALE_TOKEN_PRICE_ETH || "0.001"; // Default 0.001 ETH
   const mzcalPriceEth = process.env.MZCAL_TOKEN_PRICE_ETH || "0.002";     // Default 0.002 ETH
 
+  // Validate that the price strings are valid numbers before parsing
+  const isValidNumber = (str: string): boolean => {
+    if (str === undefined || str === null || str === "") return false;
+    const num = parseFloat(str);
+    return !isNaN(num) && isFinite(num) && num >= 0;
+  };
+
+  if (!isValidNumber(presalePriceEth)) {
+    console.error(`❌ Invalid presale token price: ${presalePriceEth}`);
+    return;
+  }
+  
+  if (!isValidNumber(mzcalPriceEth)) {
+    console.error(`❌ Invalid MZCAL token price: ${mzcalPriceEth}`);
+    return;
+  }
+
   // Convert to wei
-  const presaleTokenPrice = ethers.parseUnits(presalePriceEth, "ether");
-  const mzcalTokenPrice = ethers.parseUnits(mzcalPriceEth, "ether");
+  let presaleTokenPrice, mzcalTokenPrice;
+  try {
+    presaleTokenPrice = ethers.parseUnits(presalePriceEth, "ether");
+    mzcalTokenPrice = ethers.parseUnits(mzcalPriceEth, "ether");
+  } catch (error: any) {
+    console.error("❌ Error parsing token prices:", error.message);
+    console.log("💡 Make sure prices are valid decimal numbers (e.g., '0.001', '0.1', '10')");
+    return;
+  }
 
   console.log("📋 Price settings to be applied:");
   console.log(`  Presale Token Price: ${presalePriceEth} ETH (${presaleTokenPrice.toString()} wei)`);

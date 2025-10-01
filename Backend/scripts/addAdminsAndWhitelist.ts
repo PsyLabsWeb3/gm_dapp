@@ -16,17 +16,35 @@ async function main() {
   const token = await ethers.getContractAt("contracts/MzcalToken.sol:MzcalToken", contractAddress);
 
   // Get addresses from environment variables or command line
-  const adminAddresses = process.env.ADMIN_ADDRESSES?.split(',') || [
+  const rawAdminAddresses = process.env.ADMIN_ADDRESSES?.split(',') || [
     "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",  // Default test address
     "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",  // Default test address
     "0x90F79bf6EB2c4f870365E785982E1f101E93b906"   // Default test address
-  ].map(addr => addr.trim());
+  ];
+  const adminAddresses = rawAdminAddresses.map(addr => addr.trim()).filter(addr => addr !== '');
 
-  const whitelistAddresses = process.env.WHITELIST_ADDRESSES?.split(',') || [
+  // Validate admin addresses
+  for (const addr of adminAddresses) {
+    if (!ethers.isAddress(addr)) {
+      console.error(`❌ Invalid admin address: ${addr}`);
+      return;
+    }
+  }
+
+  const rawWhitelistAddresses = process.env.WHITELIST_ADDRESSES?.split(',') || [
     "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",  // Default test address
     "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",  // Default test address
     "0x90F79bf6EB2c4f870365E785982E1f101E93b906"   // Default test address
-  ].map(addr => addr.trim());
+  ];
+  const whitelistAddresses = rawWhitelistAddresses.map(addr => addr.trim()).filter(addr => addr !== '');
+
+  // Validate whitelist addresses
+  for (const addr of whitelistAddresses) {
+    if (!ethers.isAddress(addr)) {
+      console.error(`❌ Invalid whitelist address: ${addr}`);
+      return;
+    }
+  }
 
   console.log("📋 Admin addresses to be added:");
   adminAddresses.forEach((addr, index) => {
