@@ -7,11 +7,11 @@ import { existsSync } from "fs";
  */
 
 async function runScriptTests() {
-  console.log("🚀 Starting script tests...\n");
+  console.log("Starting script tests...\n");
 
   // Check if hardhat node is running
   const network = process.env.HARDHAT_NETWORK || "localhost";
-  console.log(`📋 Testing against network: ${network}`);
+  console.log(`Testing against network: ${network}`);
 
   // List of test files to run
   const testFiles = [

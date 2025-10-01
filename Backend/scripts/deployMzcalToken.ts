@@ -10,7 +10,7 @@ async function main() {
     const supplies: number[] = [500];
     const prices: number[] = [2]; // (In $MZCAL)
 
-    const MzcalToken = await ethers.getContractFactory("contracts/MzcalToken.sol:MzcalToken");
+    const MzcalToken = await ethers.getContractFactory("MzcalToken");
     const token = await MzcalToken.deploy("http://localhost:8080/tokens/{id}.json");
     await token.waitForDeployment();
 
@@ -26,18 +26,18 @@ async function main() {
     }
 
     // Get the proper ABI from the contract factory
-    const contractArtifact = await artifacts.readArtifact("contracts/MzcalToken.sol:MzcalToken");
+    const contractArtifact = await artifacts.readArtifact("MzcalToken");
     const abi = contractArtifact.abi;
     
     // Save to the config directory (the primary location for the ABI)
     if (fs.existsSync("../Frontend/src/config")) {
         fs.writeFileSync("../Frontend/src/config/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
-        console.log("✅ ABI saved to ../Frontend/src/config/MzcalTokenABI.json");
+        console.log("ABI saved to ../Frontend/src/config/MzcalTokenABI.json");
     } else {
-        console.log("⚠️ Frontend/src/config directory does not exist. Creating it...");
+        console.log("Frontend/src/config directory does not exist. Creating it...");
         fs.mkdirSync("../Frontend/src/config", { recursive: true });
         fs.writeFileSync("../Frontend/src/config/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
-        console.log("✅ ABI saved to ../Frontend/src/config/MzcalTokenABI.json");
+        console.log("ABI saved to ../Frontend/src/config/MzcalTokenABI.json");
     }
 }
 

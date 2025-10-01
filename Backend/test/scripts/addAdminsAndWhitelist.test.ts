@@ -78,9 +78,9 @@ describe("addAdminsAndWhitelist.ts script", function () {
         }
 
         // Check that the script executed successfully
-        expect(stdout).to.include("✅ All admin and whitelist operations completed successfully!");
-        expect(stdout).to.include("📋 Admin addresses to be added:");
-        expect(stdout).to.include("📋 Whitelist addresses to be added:");
+        expect(stdout).to.include("All admin and whitelist operations completed successfully!");
+        expect(stdout).to.include("Admin addresses to be added:");
+        expect(stdout).to.include("Whitelist addresses to be added:");
 
         done();
       });
@@ -88,8 +88,12 @@ describe("addAdminsAndWhitelist.ts script", function () {
 
   it("Should fail gracefully when no contract address is provided", function (done) {
     // Execute the script without providing a contract address
+    // Set MZCAL_CONTRACT_ADDRESS to empty string to override .env
+    const testEnv = { ...process.env };
+    testEnv.MZCAL_CONTRACT_ADDRESS = "";
+    
     const child = exec("npx hardhat run scripts/addAdminsAndWhitelist.ts --network localhost", 
-      { cwd: process.cwd() }, (error, stdout, stderr) => {
+      { cwd: process.cwd(), env: testEnv }, (error, stdout, stderr) => {
         
         console.log(`stdout: ${stdout}`);
         if (stderr) {
@@ -97,7 +101,7 @@ describe("addAdminsAndWhitelist.ts script", function () {
         }
 
         // The script should show usage instructions when no address is provided
-        expect(stdout).to.include("❌ Contract address not provided");
+        expect(stdout).to.include("Contract address not provided");
         expect(stdout).to.include("Usage: npx hardhat run scripts/addAdminsAndWhitelist.ts --network <network>");
 
         done();

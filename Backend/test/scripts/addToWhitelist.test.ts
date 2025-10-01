@@ -79,8 +79,12 @@ describe("addToWhitelist.ts script", function () {
 
   // Edge case: Test script with no contract address provided
   it("Should fail gracefully when no contract address is provided to the script", function (done) {
+    // Use an environment with empty MZCAL_CONTRACT_ADDRESS to override .env
+    const testEnv = { ...process.env };
+    testEnv.MZCAL_CONTRACT_ADDRESS = "";
+    
     const child = exec("npx hardhat run scripts/addToWhitelist.ts --network localhost", 
-      { cwd: process.cwd() }, (error, stdout, stderr) => {
+      { cwd: process.cwd(), env: testEnv }, (error, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
         if (stderr) {
           console.error(`stderr: ${stderr}`);

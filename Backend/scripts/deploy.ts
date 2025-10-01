@@ -1,10 +1,10 @@
-import { ethers } from "hardhat";
+import { ethers, artifacts } from "hardhat";
 import fs from "fs";
 import { network } from "hardhat";
 
 async function main() {
   const networkName = network.name;
-  console.log(`🚀 Deploying MzcalToken to ${networkName} network...`);
+  console.log(`Deploying MzcalToken to ${networkName} network...`);
   
   // Get the contract factory
   const MzcalToken = await ethers.getContractFactory("MzcalToken");
@@ -19,20 +19,20 @@ async function main() {
     uri = "https://api.example.com/local/token/{id}.json";
   }
   
-  console.log("⏳ Deploying MzcalToken contract with URI:", uri);
+  console.log("Deploying MzcalToken contract with URI:", uri);
   
   const token = await MzcalToken.deploy(uri);
   await token.waitForDeployment(); // Wait for the contract to be deployed
   
   const address = await token.getAddress();
   
-  console.log("✅ MzcalToken deployed successfully!");
-  console.log("🔗 Contract Address:", address);
-  console.log("👤 Deployer Address:", await token.owner());
-  console.log("🌐 Network:", networkName);
+  console.log("MzcalToken deployed successfully!");
+  console.log("Contract Address:", address);
+  console.log("Deployer Address:", await token.owner());
+  console.log("Network:", networkName);
   
   // Log some initial state
-  console.log("\n📊 Initial State:");
+  console.log("\n Initial State:");
   console.log("MZCAL Supply:", (await token.MZCAL_INITIAL_SUPPLY()).toString());
   console.log("PRESALE_TOKEN Supply:", (await token.PRESALE_INITIAL_SUPPLY()).toString());
   
@@ -71,12 +71,12 @@ async function main() {
   if (fs.existsSync("../Frontend/src/config")) {
     fs.writeFileSync("../Frontend/src/config/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
   } else {
-    console.log("⚠️ Frontend/src/config directory does not exist. Creating it...");
+    console.log("Frontend/src/config directory does not exist. Creating it...");
     fs.mkdirSync("../Frontend/src/config", { recursive: true });
     fs.writeFileSync("../Frontend/src/config/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
   }
   
-  console.log("\n📋 ABI and address saved to:");
+  console.log("\n ABI and address saved to:");
   console.log("- contract-addresses.txt");
   console.log("- mzcal_token_abi.json");
   console.log("- ../Frontend/src/abi/MzcalTokenABI.json");
@@ -87,6 +87,6 @@ async function main() {
 main()
   .then(() => process.exit(0))
   .catch((error: any) => {
-    console.error("❌ Deployment failed:", error);
+    console.error(" Deployment failed:", error);
     process.exit(1);
   });

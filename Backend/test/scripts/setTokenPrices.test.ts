@@ -73,8 +73,8 @@ describe("setTokenPrices.ts script", function () {
         }
 
         // Check that the script executed successfully with custom prices
-        expect(stdout).to.include("✅ All token prices set successfully!");
-        expect(stdout).to.include("📋 Price settings to be applied:");
+        expect(stdout).to.include("All token prices set successfully!");
+        expect(stdout).to.include("Price settings to be applied:");
         expect(stdout).to.include("0.005 ETH");
         expect(stdout).to.include("0.01 ETH");
 
@@ -84,8 +84,12 @@ describe("setTokenPrices.ts script", function () {
 
   it("Should fail gracefully when no contract address is provided", function (done) {
     // Execute the script without providing a contract address
+    // Set MZCAL_CONTRACT_ADDRESS to empty string to override .env
+    const testEnv = { ...process.env };
+    testEnv.MZCAL_CONTRACT_ADDRESS = "";
+    
     const child = exec("npx hardhat run scripts/setTokenPrices.ts --network localhost", 
-      { cwd: process.cwd() }, (error, stdout, stderr) => {
+      { cwd: process.cwd(), env: testEnv }, (error, stdout, stderr) => {
         
         console.log(`stdout: ${stdout}`);
         if (stderr) {
@@ -93,7 +97,7 @@ describe("setTokenPrices.ts script", function () {
         }
 
         // The script should show usage instructions when no address is provided
-        expect(stdout).to.include("❌ Contract address not provided");
+        expect(stdout).to.include("Contract address not provided");
         expect(stdout).to.include("Usage: npx hardhat run scripts/setTokenPrices.ts --network <network>");
 
         done();
@@ -137,7 +141,7 @@ describe("setTokenPrices.ts script", function () {
         }
 
         // Check that the script executed successfully
-        expect(stdout).to.include("✅ All token prices set successfully!");
+        expect(stdout).to.include("All token prices set successfully!");
         
         done();
       });
@@ -165,7 +169,7 @@ describe("setTokenPrices.ts script", function () {
         }
 
         // Check that the script executed successfully
-        expect(stdout).to.include("✅ All token prices set successfully!");
+        expect(stdout).to.include("All token prices set successfully!");
         
         done();
       });
@@ -193,7 +197,7 @@ describe("setTokenPrices.ts script", function () {
         }
 
         // Check that the script executed successfully
-        expect(stdout).to.include("✅ All token prices set successfully!");
+        expect(stdout).to.include("All token prices set successfully!");
         
         done();
       });
