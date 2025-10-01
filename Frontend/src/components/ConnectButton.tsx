@@ -13,15 +13,15 @@ export function ConnectButton() {
   if (isConnected && address) {
     return (
       <div className="flex items-center gap-3">
-        <div className="px-4 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center h-9">
+        <div className="px-4 bg-[#1a1a1a] text-[#d4af37] rounded-lg flex items-center justify-center h-9 border border-[#d4af37]/30">
           <span className="text-xs font-medium">{chain?.name || 'Unknown Network'}</span>
         </div>
-        <span className="px-4 bg-green-500/20 text-green-400 rounded-lg font-mono text-sm flex items-center h-9">
+        <span className="px-4 bg-[#1a1a1a] text-[#d4af37] rounded-lg font-mono text-sm flex items-center h-9 border border-[#d4af37]/30">
           {formatAddress(address)}
         </span>
         <button
           onClick={() => disconnect()}
-          className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors flex items-center justify-center"
+          className="px-4 h-9 bg-[#1a1a1a] hover:bg-[#2a2a2a] text-[#d4af37] rounded-lg transition-colors flex items-center justify-center border border-[#d4af37]/50 hover:border-[#d4af37]"
         >
           Disconnect
         </button>
@@ -32,7 +32,7 @@ export function ConnectButton() {
   return (
     <button
       onClick={() => connect({ connector: connectors[0] })}
-      className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors font-medium"
+      className="px-6 py-2 bg-[#1a1a1a] hover:bg-[#2a2a2a] text-[#d4af37] rounded-lg transition-colors border border-[#d4af37]/50 hover:border-[#d4af37] text-sm"
     >
       Connect Wallet
     </button>

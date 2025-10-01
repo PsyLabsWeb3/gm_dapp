@@ -36,20 +36,20 @@ export function CheckEligibility() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center px-8 py-12">
-      <div className="max-w-md w-full bg-gray-900 border border-gray-800 rounded-lg p-8">
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">
-          Check Eligibility
+    <div className="min-h-screen bg-black flex items-center justify-center px-8 py-12">
+      <div className="max-w-xl w-full bg-black border-2 border-[#d4af37] rounded-3xl p-12">
+        <h2 className="text-2xl font-bold text-[#d4af37] mb-8 text-center tracking-wider">
+          $MZCAL PRESALE WHITELIST
         </h2>
 
         {/* Address Input Section */}
-        <div className="mb-6">
-          <label className="block text-sm text-gray-400 mb-2">
-            {connectedAddress ? 'Connected Address:' : 'Enter Address:'}
+        <div className="mb-8">
+          <label className="block text-xs text-[#d4af37]/70 mb-3 uppercase tracking-wide">
+            {connectedAddress ? 'Connected Address' : 'Enter Address'}
           </label>
 
           {connectedAddress ? (
-            <div className="font-mono text-sm text-green-400 bg-green-500/10 px-4 py-3 rounded-lg break-all border border-green-500/20">
+            <div className="font-mono text-sm text-[#d4af37] bg-[#1a1a1a] px-5 py-4 rounded-xl break-all border border-[#d4af37]/30">
               {connectedAddress}
             </div>
           ) : (
@@ -58,7 +58,7 @@ export function CheckEligibility() {
               value={inputAddress}
               onChange={(e) => setInputAddress(e.target.value)}
               placeholder="0x..."
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white font-mono text-sm focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-[#1a1a1a] border border-[#d4af37]/50 rounded-xl px-5 py-4 text-[#d4af37] placeholder-[#d4af37]/30 font-mono text-sm focus:outline-none focus:border-[#d4af37] transition-colors"
             />
           )}
 
@@ -68,22 +68,24 @@ export function CheckEligibility() {
         </div>
 
         {/* Check Button */}
-        <button
-          onClick={handleCheck}
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg transition-colors mb-6"
-        >
-          Check Eligibility
-        </button>
+        <div className="flex justify-center mb-8">
+          <button
+            onClick={handleCheck}
+            className="px-12 py-3 bg-[#1a1a1a] hover:bg-[#2a2a2a] text-[#d4af37] rounded-xl transition-colors border border-[#d4af37]/50 hover:border-[#d4af37] text-sm"
+          >
+            Check Eligibility
+          </button>
+        </div>
 
         {/* Result Section */}
         {addressToCheck && (
           <div className="space-y-4">
             {/* Loading State */}
             {isLoading && (
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-6">
+              <div className="bg-[#1a1a1a] border border-[#d4af37]/30 rounded-xl p-6">
                 <div className="flex items-center justify-center mb-3">
                   <svg
-                    className="h-8 w-8 text-blue-500 animate-spin"
+                    className="h-8 w-8 text-[#d4af37] animate-spin"
                     fill="none"
                     viewBox="0 0 24 24"
                   >
@@ -102,12 +104,12 @@ export function CheckEligibility() {
                     />
                   </svg>
                 </div>
-                <p className="text-blue-500 font-medium text-center">
+                <p className="text-[#d4af37] font-medium text-center">
                   Checking eligibility...
                 </p>
-                <div className="mt-4 pt-4 border-t border-blue-500/20">
-                  <p className="text-xs text-gray-400 text-center break-all">
-                    Address: {addressToCheck}
+                <div className="mt-4 pt-4 border-t border-[#d4af37]/20">
+                  <p className="text-xs text-[#d4af37]/60 text-center break-all font-mono">
+                    {addressToCheck}
                   </p>
                 </div>
               </div>
@@ -115,7 +117,7 @@ export function CheckEligibility() {
 
             {/* Error State */}
             {isError && (
-              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-6">
+              <div className="bg-[#1a1a1a] border border-red-500/50 rounded-xl p-6">
                 <div className="flex items-center justify-center mb-3">
                   <svg
                     className="h-8 w-8 text-red-500"
@@ -142,10 +144,10 @@ export function CheckEligibility() {
 
             {/* Success State - Whitelisted */}
             {!isLoading && !isError && isWhitelisted && (
-              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6">
+              <div className="bg-[#1a1a1a] border border-[#d4af37] rounded-xl p-6">
                 <div className="flex items-center justify-center mb-3">
                   <svg
-                    className="h-12 w-12 text-green-500"
+                    className="h-12 w-12 text-[#d4af37]"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -158,15 +160,15 @@ export function CheckEligibility() {
                     />
                   </svg>
                 </div>
-                <p className="text-green-500 font-bold text-xl text-center mb-2">
+                <p className="text-[#d4af37] font-bold text-xl text-center mb-2">
                   ✅ You are eligible!
                 </p>
-                <p className="text-green-400/70 text-sm text-center">
+                <p className="text-[#d4af37]/70 text-sm text-center">
                   This address is whitelisted for the presale
                 </p>
-                <div className="mt-4 pt-4 border-t border-green-500/20">
-                  <p className="text-xs text-gray-400 text-center break-all">
-                    Address: {addressToCheck}
+                <div className="mt-4 pt-4 border-t border-[#d4af37]/20">
+                  <p className="text-xs text-[#d4af37]/60 text-center break-all font-mono">
+                    {addressToCheck}
                   </p>
                 </div>
               </div>
