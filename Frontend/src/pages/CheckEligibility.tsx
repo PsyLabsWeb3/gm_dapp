@@ -36,20 +36,53 @@ export function CheckEligibility() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center px-8 py-12">
-      <div className="max-w-md w-full bg-gray-900 border border-gray-800 rounded-lg p-8">
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">
-          Check Eligibility
+    <div className="h-full w-full flex items-center justify-center px-8 py-12 relative"
+    >
+
+      <div
+        className="max-w-3xl w-full rounded-3xl p-20 relative z-30"
+        style={{
+          background: 'linear-gradient(180deg, #0C0C0C 0%, #181818 100%)',
+          border: '3px solid transparent',
+          backgroundClip: 'padding-box',
+          position: 'relative'
+        }}
+      >
+        {/* Gradient border effect */}
+        <div
+          className="absolute inset-0 rounded-3xl -z-10"
+          style={{
+            background: 'linear-gradient(180deg, #F9B064 0%, rgba(147, 104, 59, 0.27) 100%)',
+            padding: '3px',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude'
+          }}
+        ></div>
+        <h2 className="text-3xl font-bold mb-12 text-center tracking-wider" style={{ color: '#F9B064' }}>
+          <span style={{ fontFamily: "'Cinzel Decorative', serif", fontWeight: 700 }}>$MZCAL Presale whitelist</span> 
         </h2>
 
         {/* Address Input Section */}
-        <div className="mb-6">
-          <label className="block text-sm text-gray-400 mb-2">
-            {connectedAddress ? 'Connected Address:' : 'Enter Address:'}
+        <div className="mb-12">
+          <label
+            className="block mb-3"
+            style={{
+              color: 'rgba(255, 255, 255, 0.60)',
+              textAlign: 'left',
+              fontFamily: "'Cinzel Decorative', serif",
+              fontSize: '24px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: 'normal',
+              textTransform: 'lowercase',
+            }}
+          >
+            {connectedAddress ? 'Connected Address' : 'Enter Address'}
           </label>
 
           {connectedAddress ? (
-            <div className="font-mono text-sm text-green-400 bg-green-500/10 px-4 py-3 rounded-lg break-all border border-green-500/20">
+            <div className="font-mono text-base text-[#d4af37] px-6 py-3 break-all border border-[#d4af37]/30" style={{ backgroundColor: 'rgba(147, 104, 59, 0.15)', borderRadius: '20px' }}>
               {connectedAddress}
             </div>
           ) : (
@@ -58,7 +91,8 @@ export function CheckEligibility() {
               value={inputAddress}
               onChange={(e) => setInputAddress(e.target.value)}
               placeholder="0x..."
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white font-mono text-sm focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full border border-[#d4af37]/50 px-6 py-3 text-[#d4af37] placeholder-[#d4af37]/30 font-mono text-base focus:outline-none focus:border-[#d4af37] transition-colors"
+              style={{ backgroundColor: 'rgba(147, 104, 59, 0.15)', borderRadius: '20px' }}
             />
           )}
 
@@ -68,22 +102,46 @@ export function CheckEligibility() {
         </div>
 
         {/* Check Button */}
-        <button
-          onClick={handleCheck}
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg transition-colors mb-6"
-        >
-          Check Eligibility
-        </button>
+        <div className="flex justify-center mb-12">
+          <button
+            onClick={handleCheck}
+            className="rounded-xl transition-all"
+            style={{
+              color: '#FFFFFF',
+              fontFamily: 'Lato, sans-serif',
+              fontStyle: 'italic',
+              fontSize: '27px',
+              // fontWeight: 200,
+              border: '4px solid transparent',
+              backgroundImage: 'linear-gradient(180deg, #0C0C0C 0%, #181818 100%), linear-gradient(180deg, #F9B064 0%, rgba(147, 104, 59, 0.27) 100%)',
+              backgroundOrigin: 'border-box',
+              backgroundClip: 'padding-box, border-box',
+              width: '330px',
+              height: '70px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundImage = 'linear-gradient(180deg, #181818 0%, #1a1a1a 100%), linear-gradient(180deg, #F9B064 0%, rgba(147, 104, 59, 0.27) 100%)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundImage = 'linear-gradient(180deg, #0C0C0C 0%, #181818 100%), linear-gradient(180deg, #F9B064 0%, rgba(147, 104, 59, 0.27) 100%)'
+            }}
+          >
+            Check Elegibility
+          </button>
+        </div>
 
         {/* Result Section */}
         {addressToCheck && (
           <div className="space-y-4">
             {/* Loading State */}
             {isLoading && (
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-6">
+              <div className="bg-[#1a1a1a] border border-[#d4af37]/30 rounded-xl p-6">
                 <div className="flex items-center justify-center mb-3">
                   <svg
-                    className="h-8 w-8 text-blue-500 animate-spin"
+                    className="h-8 w-8 text-[#d4af37] animate-spin"
                     fill="none"
                     viewBox="0 0 24 24"
                   >
@@ -102,12 +160,12 @@ export function CheckEligibility() {
                     />
                   </svg>
                 </div>
-                <p className="text-blue-500 font-medium text-center">
+                <p className="text-[#d4af37] font-medium text-center">
                   Checking eligibility...
                 </p>
-                <div className="mt-4 pt-4 border-t border-blue-500/20">
-                  <p className="text-xs text-gray-400 text-center break-all">
-                    Address: {addressToCheck}
+                <div className="mt-4 pt-4 border-t border-[#d4af37]/20">
+                  <p className="text-xs text-[#d4af37]/60 text-center break-all font-mono">
+                    {addressToCheck}
                   </p>
                 </div>
               </div>
@@ -115,7 +173,7 @@ export function CheckEligibility() {
 
             {/* Error State */}
             {isError && (
-              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-6">
+              <div className="bg-[#1a1a1a] border border-red-500/50 rounded-xl p-6">
                 <div className="flex items-center justify-center mb-3">
                   <svg
                     className="h-8 w-8 text-red-500"
@@ -142,10 +200,10 @@ export function CheckEligibility() {
 
             {/* Success State - Whitelisted */}
             {!isLoading && !isError && isWhitelisted && (
-              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6">
+              <div className="bg-[#1a1a1a] border border-[#d4af37] rounded-xl p-6">
                 <div className="flex items-center justify-center mb-3">
                   <svg
-                    className="h-12 w-12 text-green-500"
+                    className="h-12 w-12 text-[#d4af37]"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -158,15 +216,15 @@ export function CheckEligibility() {
                     />
                   </svg>
                 </div>
-                <p className="text-green-500 font-bold text-xl text-center mb-2">
+                <p className="text-[#d4af37] font-bold text-xl text-center mb-2">
                   ✅ You are eligible!
                 </p>
-                <p className="text-green-400/70 text-sm text-center">
+                <p className="text-[#d4af37]/70 text-sm text-center">
                   This address is whitelisted for the presale
                 </p>
-                <div className="mt-4 pt-4 border-t border-green-500/20">
-                  <p className="text-xs text-gray-400 text-center break-all">
-                    Address: {addressToCheck}
+                <div className="mt-4 pt-4 border-t border-[#d4af37]/20">
+                  <p className="text-xs text-[#d4af37]/60 text-center break-all font-mono">
+                    {addressToCheck}
                   </p>
                 </div>
               </div>
