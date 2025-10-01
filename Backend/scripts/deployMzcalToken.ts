@@ -1,4 +1,5 @@
-import { ethers } from "hardhat";
+import { ethers, artifacts } from "hardhat";
+import fs from "fs";
 
 async function main() {
     const [deployer] = await ethers.getSigners();
@@ -22,6 +23,21 @@ async function main() {
         await season1Contract.mint(deployer.address, tokenIds[i], supplies[i]);
         await season1Contract.setTokenPrice(tokenIds[i], prices[i]);
         console.log(`Token ${tokenIds[i]} initialized: Supply = ${supplies[i]}, Price = ${prices[i]}`);
+    }
+
+    // Get the proper ABI from the contract factory
+    const contractArtifact = await artifacts.readArtifact("contracts/MzcalToken.sol:MzcalToken");
+    const abi = contractArtifact.abi;
+    
+    // Save to the config directory (the primary location for the ABI)
+    if (fs.existsSync("../Frontend/src/config")) {
+        fs.writeFileSync("../Frontend/src/config/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
+        console.log("✅ ABI saved to ../Frontend/src/config/MzcalTokenABI.json");
+    } else {
+        console.log("⚠️ Frontend/src/config directory does not exist. Creating it...");
+        fs.mkdirSync("../Frontend/src/config", { recursive: true });
+        fs.writeFileSync("../Frontend/src/config/MzcalTokenABI.json", JSON.stringify(abi, null, 2));
+        console.log("✅ ABI saved to ../Frontend/src/config/MzcalTokenABI.json");
     }
 }
 
