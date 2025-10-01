@@ -32,7 +32,27 @@ export function ConnectButton() {
   return (
     <button
       onClick={() => connect({ connector: connectors[0] })}
-      className="px-6 py-2 bg-[#1a1a1a] hover:bg-[#2a2a2a] text-[#d4af37] rounded-lg transition-colors border border-[#d4af37]/50 hover:border-[#d4af37] text-sm"
+      className="bg-[#0C0C0C] hover:bg-[#181818] rounded-lg transition-all text-sm relative"
+      style={{
+        color: '#F9B064',
+        fontFamily: 'Lato, sans-serif',
+        fontWeight: 400,
+        border: '4px solid transparent',
+        backgroundImage: 'linear-gradient(#0C0C0C, #0C0C0C), linear-gradient(90deg, #F9B064 0%, rgba(249, 176, 100, 0.5) 100%)',
+        backgroundOrigin: 'border-box',
+        backgroundClip: 'padding-box, border-box',
+        height: '32px',
+        width: '200px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundImage = 'linear-gradient(#181818, #181818), linear-gradient(90deg, #F9B064 0%, rgba(249, 176, 100, 0.5) 100%)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundImage = 'linear-gradient(#0C0C0C, #0C0C0C), linear-gradient(90deg, #F9B064 0%, rgba(249, 176, 100, 0.5) 100%)'
+      }}
     >
       Connect Wallet
     </button>

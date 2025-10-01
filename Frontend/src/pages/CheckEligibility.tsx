@@ -36,20 +36,53 @@ export function CheckEligibility() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-8 py-12">
-      <div className="max-w-xl w-full bg-black border-2 border-[#d4af37] rounded-3xl p-12">
-        <h2 className="text-2xl font-bold text-[#d4af37] mb-8 text-center tracking-wider">
-          $MZCAL PRESALE WHITELIST
+    <div className="h-full w-full flex items-center justify-center px-8 py-12 relative"
+    >
+
+      <div
+        className="max-w-3xl w-full rounded-3xl p-20 relative z-30"
+        style={{
+          background: 'linear-gradient(180deg, #0C0C0C 0%, #181818 100%)',
+          border: '3px solid transparent',
+          backgroundClip: 'padding-box',
+          position: 'relative'
+        }}
+      >
+        {/* Gradient border effect */}
+        <div
+          className="absolute inset-0 rounded-3xl -z-10"
+          style={{
+            background: 'linear-gradient(180deg, #F9B064 0%, rgba(147, 104, 59, 0.27) 100%)',
+            padding: '3px',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude'
+          }}
+        ></div>
+        <h2 className="text-3xl font-bold mb-12 text-center tracking-wider" style={{ color: '#F9B064' }}>
+          <span style={{ fontFamily: "'Cinzel Decorative', serif", fontWeight: 700 }}>$MZCAL Presale whitelist</span> 
         </h2>
 
         {/* Address Input Section */}
-        <div className="mb-8">
-          <label className="block text-xs text-[#d4af37]/70 mb-3 uppercase tracking-wide">
+        <div className="mb-12">
+          <label
+            className="block mb-3"
+            style={{
+              color: 'rgba(255, 255, 255, 0.60)',
+              textAlign: 'left',
+              fontFamily: "'Cinzel Decorative', serif",
+              fontSize: '24px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: 'normal',
+              textTransform: 'lowercase',
+            }}
+          >
             {connectedAddress ? 'Connected Address' : 'Enter Address'}
           </label>
 
           {connectedAddress ? (
-            <div className="font-mono text-sm text-[#d4af37] bg-[#1a1a1a] px-5 py-4 rounded-xl break-all border border-[#d4af37]/30">
+            <div className="font-mono text-base text-[#d4af37] px-6 py-3 break-all border border-[#d4af37]/30" style={{ backgroundColor: 'rgba(147, 104, 59, 0.15)', borderRadius: '20px' }}>
               {connectedAddress}
             </div>
           ) : (
@@ -58,7 +91,8 @@ export function CheckEligibility() {
               value={inputAddress}
               onChange={(e) => setInputAddress(e.target.value)}
               placeholder="0x..."
-              className="w-full bg-[#1a1a1a] border border-[#d4af37]/50 rounded-xl px-5 py-4 text-[#d4af37] placeholder-[#d4af37]/30 font-mono text-sm focus:outline-none focus:border-[#d4af37] transition-colors"
+              className="w-full border border-[#d4af37]/50 px-6 py-3 text-[#d4af37] placeholder-[#d4af37]/30 font-mono text-base focus:outline-none focus:border-[#d4af37] transition-colors"
+              style={{ backgroundColor: 'rgba(147, 104, 59, 0.15)', borderRadius: '20px' }}
             />
           )}
 
@@ -68,12 +102,34 @@ export function CheckEligibility() {
         </div>
 
         {/* Check Button */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-12">
           <button
             onClick={handleCheck}
-            className="px-12 py-3 bg-[#1a1a1a] hover:bg-[#2a2a2a] text-[#d4af37] rounded-xl transition-colors border border-[#d4af37]/50 hover:border-[#d4af37] text-sm"
+            className="rounded-xl transition-all"
+            style={{
+              color: '#FFFFFF',
+              fontFamily: 'Lato, sans-serif',
+              fontStyle: 'italic',
+              fontSize: '27px',
+              // fontWeight: 200,
+              border: '4px solid transparent',
+              backgroundImage: 'linear-gradient(180deg, #0C0C0C 0%, #181818 100%), linear-gradient(180deg, #F9B064 0%, rgba(147, 104, 59, 0.27) 100%)',
+              backgroundOrigin: 'border-box',
+              backgroundClip: 'padding-box, border-box',
+              width: '330px',
+              height: '70px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundImage = 'linear-gradient(180deg, #181818 0%, #1a1a1a 100%), linear-gradient(180deg, #F9B064 0%, rgba(147, 104, 59, 0.27) 100%)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundImage = 'linear-gradient(180deg, #0C0C0C 0%, #181818 100%), linear-gradient(180deg, #F9B064 0%, rgba(147, 104, 59, 0.27) 100%)'
+            }}
           >
-            Check Eligibility
+            Check Elegibility
           </button>
         </div>
 
