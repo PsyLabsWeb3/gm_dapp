@@ -16,11 +16,21 @@ async function main() {
   const token = await ethers.getContractAt("contracts/MzcalToken.sol:MzcalToken", contractAddress);
   
   // Example addresses to add to whitelist (replace with actual addresses you want to whitelist)
-  const addressesToWhitelist: string[] = [
+  const rawAddressesToWhitelist: string[] = [
     "0x1234567890123456789012345678901234567890",
     "0x1234567890123456789012345678901234567890",
     "0x1234567890123456789012345678901234567890"
   ];
+  
+  // Validate addresses before processing
+  for (const addr of rawAddressesToWhitelist) {
+    if (!ethers.isAddress(addr)) {
+      console.error(`❌ Invalid whitelist address: ${addr}`);
+      return;
+    }
+  }
+  
+  const addressesToWhitelist: string[] = rawAddressesToWhitelist;
   
   console.log("📋 Addresses to be added to whitelist:");
   addressesToWhitelist.forEach((addr, index) => {
