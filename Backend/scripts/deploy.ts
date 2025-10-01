@@ -7,7 +7,7 @@ async function main() {
   console.log(`🚀 Deploying MzcalToken to ${networkName} network...`);
   
   // Get the contract factory
-  const MzcalToken = await ethers.getContractFactory("contracts/MzcalToken.sol:MzcalToken");
+  const MzcalToken = await ethers.getContractFactory("MzcalToken");
   
   // Deploy with a production URI (adjust according to network)
   let uri: string;
@@ -43,7 +43,7 @@ async function main() {
   // Save the ABI and address for frontend use
   
   // Get the proper ABI from the contract factory
-  const contractArtifact = await artifacts.readArtifact("contracts/MzcalToken.sol:MzcalToken");
+  const contractArtifact = await artifacts.readArtifact("MzcalToken");
   const abi = contractArtifact.abi;
   
   // Save contract address to a file with network information

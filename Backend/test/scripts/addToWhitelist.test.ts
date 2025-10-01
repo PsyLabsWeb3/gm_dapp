@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { exec } from "child_process";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
+import { Contract } from "@ethersproject/contracts";
 
 describe("addToWhitelist.ts script", function () {
   this.timeout(50000);
@@ -16,7 +17,7 @@ describe("addToWhitelist.ts script", function () {
     [deployer] = await ethers.getSigners();
     
     // Deploy the contract using hardhat's run function
-    const MzcalToken = await ethers.getContractFactory("contracts/MzcalToken.sol:MzcalToken");
+    const MzcalToken = await ethers.getContractFactory("MzcalToken");
     token = await MzcalToken.deploy("https://api.example.com/local/token/{id}.json");
     await token.waitForDeployment();
     
@@ -53,7 +54,7 @@ describe("addToWhitelist.ts script", function () {
 
   it("Should verify that addresses were added to the whitelist", async function () {
     // Get the deployed contract instance
-    const token = await ethers.getContractAt("contracts/MzcalToken.sol:MzcalToken", contractAddress);
+    const token = await ethers.getContractAt("MzcalToken", contractAddress);
     
     // The script adds these addresses to the whitelist by default
     const testAddresses = [
@@ -112,55 +113,57 @@ describe("addToWhitelist.ts script", function () {
   });
 
   // Edge case: Test with already whitelisted addresses
-  it("Should handle duplicate whitelist additions gracefully", async function () {
-    // Add an address to whitelist
-    const [owner] = await ethers.getSigners();
-    const testAddress = "0x1234567890123456789012345678901234567890";
-    
-    // Add to whitelist via direct contract call
-    await token.connect(owner).addToPresaleWhitelist(testAddress);
-    expect(await token.isWhitelisted(testAddress)).to.be.true;
+  it("Should handle duplicate whitelist additions gracefully", function (done) {
+    (async () => {
+      // Add an address to whitelist
+      const [owner] = await ethers.getSigners();
+      const testAddress = "0x1234567890123456789012345678901234567890";
+      
+      // Add to whitelist via direct contract call
+      await token.connect(owner).addToPresaleWhitelist(testAddress);
+      expect(await token.isWhitelisted(testAddress)).to.be.true;
 
-    // Now try to add the same address via the script
-    // First update the script to use this address
-    const fs = require('fs');
-    const scriptPath = 'scripts/addToWhitelist.ts';
-    let scriptContent = fs.readFileSync(scriptPath, 'utf8');
-    
-    // Replace the addresses with our test address to check duplicate handling
-    const originalAddresses = [
-      "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-      "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC", 
-      "0x90F79bf6EB2c4f870365E785982E1f101E93b906"
-    ];
-    
-    // Replace with our test address
-    let modifiedContent = scriptContent;
-    originalAddresses.forEach(addr => {
-      modifiedContent = modifiedContent.replace(new RegExp(addr, 'g'), testAddress);
-    });
-    
-    fs.writeFileSync(scriptPath, modifiedContent);
-    
-    // Run the script
-    const env = { ...process.env, 
-      MZCAL_CONTRACT_ADDRESS: contractAddress
-    };
-
-    const child = exec("npx hardhat run scripts/addToWhitelist.ts --network localhost", 
-      { cwd: process.cwd(), env }, (error, stdout, stderr) => {
-        console.log(`stdout: ${stdout}`);
-        if (stderr) {
-          console.error(`stderr: ${stderr}`);
-        }
-
-        // Restore original script content
-        fs.writeFileSync(scriptPath, scriptContent);
-
-        // The script should handle duplicate additions gracefully
-        expect(stdout).to.include("All addresses added to whitelist successfully!");
-        
-        done();
+      // Now try to add the same address via the script
+      // First update the script to use this address
+      const fs = require('fs');
+      const scriptPath = 'scripts/addToWhitelist.ts';
+      let scriptContent = fs.readFileSync(scriptPath, 'utf8');
+      
+      // Replace the addresses with our test address to check duplicate handling
+      const originalAddresses = [
+        "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC", 
+        "0x90F79bf6EB2c4f870365E785982E1f101E93b906"
+      ];
+      
+      // Replace with our test address
+      let modifiedContent = scriptContent;
+      originalAddresses.forEach(addr => {
+        modifiedContent = modifiedContent.replace(new RegExp(addr, 'g'), testAddress);
       });
+      
+      fs.writeFileSync(scriptPath, modifiedContent);
+      
+      // Run the script
+      const env = { ...process.env, 
+        MZCAL_CONTRACT_ADDRESS: contractAddress
+      };
+
+      exec("npx hardhat run scripts/addToWhitelist.ts --network localhost", 
+        { cwd: process.cwd(), env }, (error, stdout, stderr) => {
+          console.log(`stdout: ${stdout}`);
+          if (stderr) {
+            console.error(`stderr: ${stderr}`);
+          }
+
+          // Restore original script content
+          fs.writeFileSync(scriptPath, scriptContent);
+
+          // The script should handle duplicate additions gracefully
+          expect(stdout).to.include("All addresses added to whitelist successfully!");
+          
+          done();
+        });
+    })();
   });
 });

@@ -9,11 +9,11 @@ async function main() {
   if (!contractAddress) {
     console.log("❌ Contract address not provided. Usage: npx hardhat run scripts/addToWhitelist.ts --network <network> [contract_address]");
     console.log("   Or set MZCAL_CONTRACT_ADDRESS environment variable");
-    return;
+    process.exit(1);
   }
   
   // Get the contract instance
-  const token = await ethers.getContractAt("contracts/MzcalToken.sol:MzcalToken", contractAddress);
+  const token = await ethers.getContractAt("MzcalToken", contractAddress);
   
   // Example addresses to add to whitelist (replace with actual addresses you want to whitelist)
   const rawAddressesToWhitelist: string[] = [
