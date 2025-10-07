@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
 import { Home } from './pages/Home'
 import { CheckEligibility } from './pages/CheckEligibility'
+import { BuyMzcal } from './pages/BuyMzcal'
 import backgroundImage from './assets/background.webp'
 import './App.css'
 
@@ -42,6 +43,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/check-eligibility" element={<CheckEligibility />} />
+            <Route path="/buy" element={<BuyMzcal />} />
           </Routes>
         </div>
       </div>
