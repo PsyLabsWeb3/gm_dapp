@@ -15,8 +15,8 @@ export function CheckEligibility() {
 
   // Call the hook to check whitelist status
   const result = useWhitelistStatus(addressToCheck as `0x${string}`)
-  // const isWhitelisted = result.data as boolean | undefined
-  const isWhitelisted = false // TODO: REMOVE THIS - Testing only
+  const isWhitelisted = result.data as boolean | undefined
+  // const isWhitelisted = false // TODO: REMOVE THIS - Testing only
   const isLoading = result.isLoading
   const isError = result.isError
   const contractError = result.error as Error | null
