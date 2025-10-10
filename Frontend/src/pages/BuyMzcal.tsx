@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
+import { parseEther } from 'viem'
 import { useWhitelistStatus } from '../hooks/useWhitelistStatus'
+import { usePresaleTokenPrice } from '../hooks/useTokenPrices'
+import { useBuyPresale } from '../hooks/useBuyTokens'
 
 export function BuyMzcal() {
   const { address } = useAccount()
@@ -9,18 +12,50 @@ export function BuyMzcal() {
   // Check whitelist status
   const { data: isWhitelisted } = useWhitelistStatus(address)
 
-  // Calculate MZCAL to receive (example rate: 1 $MZCAL = 0.01 $ETH)
+  // Get presale token price
+  const { priceInWei, priceInEth } = usePresaleTokenPrice()
+
+  // Buy presale hook
+  const { buyPresale, isPending, isConfirming, isSuccess, error } = useBuyPresale()
+
+  // Debug log for deployment verification
+  useEffect(() => {
+    console.log('🚀 BuyMzcal Page Loaded - Deploy Verification')
+    console.log('📅 Timestamp:', new Date().toISOString())
+    console.log('💰 Price in ETH:', priceInEth)
+    console.log('💰 Price in Wei:', priceInWei?.toString())
+    console.log('✅ Whitelisted:', isWhitelisted)
+    console.log('👤 Address:', address)
+  }, [priceInEth, priceInWei, isWhitelisted, address])
+
+  // Calculate MZCAL to receive based on ETH amount
   const calculateMzcal = (ethAmount: string) => {
     const eth = parseFloat(ethAmount)
-    if (isNaN(eth) || eth <= 0) return '00.00'
-    const mzcal = eth / 0.01 // 1 MZCAL = 0.01 ETH
+    const price = parseFloat(priceInEth)
+    if (isNaN(eth) || eth <= 0 || price === 0) return '00.00'
+    const mzcal = eth / price
     return mzcal.toFixed(2)
   }
 
   const handleBuy = () => {
-    // TODO: Implement buy logic
-    console.log('Buy clicked', { amount })
+    if (!amount || !priceInWei) return
+
+    try {
+      const ethAmount = parseEther(amount)
+      const tokenAmount = ethAmount / priceInWei
+
+      buyPresale(tokenAmount, ethAmount)
+    } catch (err) {
+      console.error('Error buying presale:', err)
+    }
   }
+
+  // Reset amount on success
+  useEffect(() => {
+    if (isSuccess) {
+      setAmount('')
+    }
+  }, [isSuccess])
 
   return (
     <div className="h-full w-full flex items-center justify-center px-8 py-12">
@@ -77,10 +112,10 @@ export function BuyMzcal() {
                   Amount of $ETH to spend
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  placeholder="Enter amount"
+                  placeholder="Enter ETH amount"
                   className="w-full px-6 py-4 text-[#d4af37] placeholder-[#d4af37]/30 text-lg focus:outline-none focus:border-[#d4af37] transition-colors"
                   style={{
                     backgroundColor: 'rgba(147, 104, 59, 0.15)',
@@ -88,28 +123,32 @@ export function BuyMzcal() {
                     border: '1px solid rgba(212, 175, 55, 0.5)',
                     fontFamily: 'Lato, sans-serif',
                   }}
-                  disabled={!isWhitelisted}
+                  disabled={!isWhitelisted || isPending || isConfirming}
+                  min="0"
+                  step="0.01"
                 />
               </div>
 
               {/* Current Rate */}
-              <div
-                className="text-center py-2"
-                style={{
-                  color: '#F9B064',
-                  fontFamily: 'Lato, sans-serif',
-                  fontSize: '16px',
-                  fontStyle: 'italic',
-                }}
-              >
-                Current rate: 1 $MZCAL = 0.01 $ETH
+              <div className="space-y-2">
+                <div
+                  className="text-center py-2"
+                  style={{
+                    color: '#F9B064',
+                    fontFamily: 'Lato, sans-serif',
+                    fontSize: '16px',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  Current rate: 1 $MZCAL = {priceInEth} $ETH
+                </div>
               </div>
 
               {/* Buy Button */}
               <div className="flex justify-center">
                 <button
                   onClick={handleBuy}
-                  disabled={!isWhitelisted}
+                  disabled={!isWhitelisted || !amount || isPending || isConfirming}
                   className="rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     color: '#FFFFFF',
@@ -127,9 +166,37 @@ export function BuyMzcal() {
                     justifyContent: 'center'
                   }}
                 >
-                  Buy
+                  {isPending ? 'Confirming...' : isConfirming ? 'Processing...' : 'Buy'}
                 </button>
               </div>
+
+              {/* Transaction Status Messages */}
+              {isSuccess && (
+                <p
+                  className="text-center"
+                  style={{
+                    color: '#4ade80',
+                    fontFamily: 'Lato, sans-serif',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                  }}
+                >
+                  ✓ Purchase successful!
+                </p>
+              )}
+
+              {error && (
+                <p
+                  className="text-center"
+                  style={{
+                    color: '#ef4444',
+                    fontFamily: 'Lato, sans-serif',
+                    fontSize: '14px',
+                  }}
+                >
+                  Error: {error.message || 'Transaction failed'}
+                </p>
+              )}
 
               {/* Whitelist Warning */}
               {!isWhitelisted && address && (
@@ -206,7 +273,7 @@ export function BuyMzcal() {
                 fontWeight: 300,
               }}
             >
-              {calculateMzcal(amount)}
+              {amount ? calculateMzcal(amount) : '00.00'}
             </div>
 
             <div
