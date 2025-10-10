@@ -1,7 +1,6 @@
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { MZCAL_TOKEN_ADDRESS } from '../config/contracts'
 import { MZCAL_TOKEN_ABI } from '../config/abi'
-import { parseEther } from 'viem'
 
 /**
  * Hook to buy presale tokens
