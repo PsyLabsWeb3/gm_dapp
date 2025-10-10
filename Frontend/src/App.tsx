@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import { Navbar } from './components/Navbar'
 import { Home } from './pages/Home'
 import { CheckEligibility } from './pages/CheckEligibility'
@@ -46,6 +47,36 @@ function App() {
             <Route path="/buy" element={<BuyMzcal />} />
           </Routes>
         </div>
+
+        {/* Toast Notifications */}
+        <Toaster
+          position="top-center"
+          containerStyle={{
+            top: '95px',
+          }}
+          toastOptions={{
+            duration: 5000,
+            style: {
+              background: 'linear-gradient(180deg, #0C0C0C 0%, #181818 100%)',
+              color: '#F9B064',
+              border: '2px solid #F9B064',
+              borderRadius: '16px',
+              padding: '16px 24px',
+              fontFamily: "'Lato', sans-serif",
+              fontSize: '16px',
+              fontStyle: 'italic',
+              boxShadow: '0 8px 32px rgba(249, 176, 100, 0.3)',
+              maxWidth: '600px',
+            },
+            error: {
+              duration: 6000,
+              iconTheme: {
+                primary: '#F9B064',
+                secondary: '#0C0C0C',
+              },
+            },
+          }}
+        />
       </div>
     </BrowserRouter>
   )
