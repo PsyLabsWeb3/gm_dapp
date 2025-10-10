@@ -9,7 +9,7 @@ import { useBuyPresale } from '../hooks/useBuyTokens'
 
 export function BuyMzcal() {
   const { address } = useAccount()
-  const location = useLocation()
+  // const location = useLocation()
   const [amount, setAmount] = useState('')
   const [purchasedAmount, setPurchasedAmount] = useState('')
   const noWalletToastShown = useRef(false)
