@@ -18,6 +18,16 @@ export function BuyMzcal() {
   // Buy presale hook
   const { buyPresale, isPending, isConfirming, isSuccess, error } = useBuyPresale()
 
+  // Debug log for deployment verification
+  useEffect(() => {
+    console.log('🚀 BuyMzcal Page Loaded - Deploy Verification')
+    console.log('📅 Timestamp:', new Date().toISOString())
+    console.log('💰 Price in ETH:', priceInEth)
+    console.log('💰 Price in Wei:', priceInWei?.toString())
+    console.log('✅ Whitelisted:', isWhitelisted)
+    console.log('👤 Address:', address)
+  }, [priceInEth, priceInWei, isWhitelisted, address])
+
   // Calculate MZCAL to receive based on ETH amount
   const calculateMzcal = (ethAmount: string) => {
     const eth = parseFloat(ethAmount)
@@ -99,7 +109,7 @@ export function BuyMzcal() {
                     textTransform: 'uppercase',
                   }}
                 >
-                  Amount of ETH to spend
+                  Amount of $ETH to spend
                 </label>
                 <input
                   type="number"
