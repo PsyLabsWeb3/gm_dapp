@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAccount } from 'wagmi'
-import { useLocation } from 'react-router-dom'
 import { parseEther } from 'viem'
 import toast from 'react-hot-toast'
 import { useWhitelistStatus } from '../hooks/useWhitelistStatus'
