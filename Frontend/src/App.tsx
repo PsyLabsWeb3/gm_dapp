@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar'
 import { Home } from './pages/Home'
 import { CheckEligibility } from './pages/CheckEligibility'
 import { BuyMzcal } from './pages/BuyMzcal'
+import { ClaimMZCAL } from './pages/ClaimMZCAL'
 import backgroundImage from './assets/background.webp'
 import './App.css'
 
@@ -45,6 +46,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/check-eligibility" element={<CheckEligibility />} />
             <Route path="/buy" element={<BuyMzcal />} />
+            <Route path="/claim" element={<ClaimMZCAL />} />
           </Routes>
         </div>
 
