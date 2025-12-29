@@ -15,7 +15,7 @@ export function ClaimMZCAL() {
   const hasBalance = formattedBalance && parseFloat(formattedBalance) > 0
 
   return (
-    <div className="h-full w-full flex items-center justify-center px-8 py-12">
+    <div className="min-h-full w-full flex items-center justify-center px-8 py-12">
       <div className="mx-auto" style={{ maxWidth: '1000px' }}>
         <div
           className="rounded-3xl relative z-30"

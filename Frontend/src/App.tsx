@@ -5,6 +5,13 @@ import { Home } from './pages/Home'
 import { CheckEligibility } from './pages/CheckEligibility'
 import { BuyMzcal } from './pages/BuyMzcal'
 import { ClaimMZCAL } from './pages/ClaimMZCAL'
+import { Marketplace } from './pages/Marketplace'
+import { MyAssets } from './pages/MyAssets'
+import { CreateListing } from './pages/CreateListing'
+import { MyListings } from './pages/MyListings'
+import { TradeHub } from './pages/TradeHub'
+import { TradeDetail } from './pages/TradeDetail'
+import { ActivityFeed } from './pages/ActivityFeed'
 import backgroundImage from './assets/background.webp'
 import './App.css'
 
@@ -12,12 +19,13 @@ function App() {
   return (
     <BrowserRouter>
       <div
-        className="h-screen flex flex-col overflow-hidden relative"
+        className="min-h-screen flex flex-col relative"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: 'auto 100%',
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
           backgroundColor: '#000'
         }}
       >
@@ -41,12 +49,19 @@ function App() {
         ></div>
 
         <Navbar />
-        <div className="flex-1 overflow-hidden relative z-20">
+        <div className="flex-1 relative z-20">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/check-eligibility" element={<CheckEligibility />} />
             <Route path="/buy" element={<BuyMzcal />} />
             <Route path="/claim" element={<ClaimMZCAL />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/marketplace/my-assets" element={<MyAssets />} />
+            <Route path="/marketplace/create-listing" element={<CreateListing />} />
+            <Route path="/marketplace/my-listings" element={<MyListings />} />
+            <Route path="/marketplace/trade" element={<TradeHub />} />
+            <Route path="/marketplace/trade/:id" element={<TradeDetail />} />
+            <Route path="/marketplace/activity" element={<ActivityFeed />} />
           </Routes>
         </div>
 

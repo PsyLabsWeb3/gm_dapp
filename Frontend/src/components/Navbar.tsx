@@ -111,6 +111,13 @@ export function Navbar() {
           <div className="xl:hidden absolute top-16 left-0 right-0 bg-black border-b border-[#3a3a3a] shadow-lg z-40">
             <div className="flex flex-col px-4 py-4 space-y-4">
               <Link
+                to="/marketplace"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-white hover:text-[#d4af37] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50"
+              >
+                Marketplace
+              </Link>
+              <Link
                 to="/check-eligibility"
                 onClick={() => setIsMenuOpen(false)}
                 className="text-white hover:text-[#d4af37] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50"
@@ -130,13 +137,6 @@ export function Navbar() {
                 className="text-white hover:text-[#d4af37] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50"
               >
                 Claim
-              </Link>
-              <Link
-                to="/marketplace"
-                onClick={() => setIsMenuOpen(false)}
-                className="text-white hover:text-[#d4af37] transition-colors text-sm py-2"
-              >
-                Marketplace
               </Link>
             </div>
           </div>

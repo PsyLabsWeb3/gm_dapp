@@ -38,7 +38,7 @@ export function CheckEligibility() {
   }
 
   return (
-    <div className="h-full w-full flex items-center justify-center px-8 py-12 relative"
+    <div className="min-h-full w-full flex items-center justify-center px-8 py-12 relative"
     >
 
       <div
@@ -62,7 +62,7 @@ export function CheckEligibility() {
           }}
         ></div>
         <h2 className="text-3xl font-bold mb-12 text-center tracking-wider" style={{ color: '#F9B064' }}>
-          <span style={{ fontFamily: "'Cinzel Decorative', serif", fontWeight: 700 }}>$MZCAL Presale whitelist</span> 
+          <span style={{ fontFamily: "'Cinzel Decorative', serif", fontWeight: 700 }}>$MZCAL Presale whitelist</span>
         </h2>
 
         {/* Address Input Section - Only show if no result yet */}
