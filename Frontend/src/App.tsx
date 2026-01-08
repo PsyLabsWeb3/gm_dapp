@@ -1,12 +1,30 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { Navbar } from './components/Navbar'
 import { Home } from './pages/Home'
-import { CheckEligibility } from './pages/CheckEligibility'
-import { BuyMzcal } from './pages/BuyMzcal'
-import { ClaimMZCAL } from './pages/ClaimMZCAL'
+import { MzcalPage } from './pages/MzcalPage'
+import { Mint } from './pages/Mint'
+import { PageTransition } from './components/PageTransition'
 import backgroundImage from './assets/background.webp'
 import './App.css'
+
+function AnimatedRoutes() {
+  const location = useLocation()
+
+  return (
+    <PageTransition key={location.pathname}>
+      <Routes location={location}>
+        <Route path="/" element={<Home />} />
+        <Route path="/mzcal" element={<MzcalPage />} />
+        <Route path="/mint" element={<Mint />} />
+        {/* Redirects for old URLs */}
+        <Route path="/check-eligibility" element={<Navigate to="/mzcal" replace />} />
+        <Route path="/buy" element={<Navigate to="/mzcal" replace />} />
+        <Route path="/claim" element={<Navigate to="/mzcal" replace />} />
+      </Routes>
+    </PageTransition>
+  )
+}
 
 function App() {
   return (
@@ -42,12 +60,7 @@ function App() {
 
         <Navbar />
         <div className="flex-1 overflow-hidden relative z-20">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/check-eligibility" element={<CheckEligibility />} />
-            <Route path="/buy" element={<BuyMzcal />} />
-            <Route path="/claim" element={<ClaimMZCAL />} />
-          </Routes>
+          <AnimatedRoutes />
         </div>
 
         {/* Toast Notifications */}
