@@ -1,7 +1,7 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 export function ConnectButton() {
-  const { address, isConnected, chain } = useAccount()
+  const { address, isConnected } = useAccount()
   const { connect, connectors } = useConnect()
   const { disconnect } = useDisconnect()
 
@@ -13,9 +13,6 @@ export function ConnectButton() {
   if (isConnected && address) {
     return (
       <div className="flex items-center gap-3">
-        <div className="px-4 bg-[#1a1a1a] text-[#d4af37] rounded-lg flex items-center justify-center h-9 border border-[#d4af37]/30">
-          <span className="text-xs font-medium">{chain?.name || 'Unknown Network'}</span>
-        </div>
         <span className="px-4 bg-[#1a1a1a] text-[#d4af37] rounded-lg font-mono text-sm flex items-center h-9 border border-[#d4af37]/30">
           {formatAddress(address)}
         </span>

@@ -23,21 +23,22 @@ export function Navbar() {
           {/* Desktop Navigation Links - Centered */}
           <div className="hidden xl:flex absolute left-1/2 transform -translate-x-1/2 items-center gap-8">
             <Link
-              to="/check-eligibility"
+              to="/mzcal"
               className="hover:text-[#F9B064] transition-colors font-normal"
               style={{
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '20px',
                 fontStyle: 'normal',
-                fontWeight: '400',
+                fontWeight: '700',
                 lineHeight: 'normal',
-                color: location.pathname === '/check-eligibility' ? '#F9B064' : '#FFFFFF'
+                color: location.pathname === '/mzcal' ? '#F9B064' : '#F9B064',
+                textShadow: '0 0 10px rgba(249, 176, 100, 0.5)',
               }}
             >
-              Eligibility
+              $MZCAL
             </Link>
             <Link
-              to="/buy"
+              to="/mint"
               className="hover:text-[#F9B064] transition-colors font-normal"
               style={{
                 fontFamily: 'Inter, sans-serif',
@@ -45,24 +46,10 @@ export function Navbar() {
                 fontStyle: 'normal',
                 fontWeight: '400',
                 lineHeight: 'normal',
-                color: location.pathname === '/buy' ? '#F9B064' : '#FFFFFF'
+                color: location.pathname === '/mint' ? '#F9B064' : '#FFFFFF'
               }}
             >
-              Buy $MZCAL
-            </Link>
-            <Link
-              to="/claim"
-              className="hover:text-[#F9B064] transition-colors font-normal"
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '20px',
-                fontStyle: 'normal',
-                fontWeight: '400',
-                lineHeight: 'normal',
-                color: location.pathname === '/claim' ? '#F9B064' : '#FFFFFF'
-              }}
-            >
-              Claim
+              Mint
             </Link>
             <Link
               to="/marketplace"
@@ -111,25 +98,19 @@ export function Navbar() {
           <div className="xl:hidden absolute top-16 left-0 right-0 bg-black border-b border-[#3a3a3a] shadow-lg z-40">
             <div className="flex flex-col px-4 py-4 space-y-4">
               <Link
-                to="/check-eligibility"
+                to="/mzcal"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-[#F9B064] hover:text-[#f0d576] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50 font-bold"
+                style={{ textShadow: '0 0 10px rgba(249, 176, 100, 0.5)' }}
+              >
+                $MZCAL
+              </Link>
+              <Link
+                to="/mint"
                 onClick={() => setIsMenuOpen(false)}
                 className="text-white hover:text-[#d4af37] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50"
               >
-                Eligibility
-              </Link>
-              <Link
-                to="/buy"
-                onClick={() => setIsMenuOpen(false)}
-                className="text-[#d4af37] hover:text-[#f0d576] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50"
-              >
-                Buy $MZCAL
-              </Link>
-              <Link
-                to="/claim"
-                onClick={() => setIsMenuOpen(false)}
-                className="text-white hover:text-[#d4af37] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50"
-              >
-                Claim
+                Mint
               </Link>
               <Link
                 to="/marketplace"
