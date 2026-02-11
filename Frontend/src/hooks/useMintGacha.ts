@@ -8,7 +8,7 @@ import {
   useWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
-import { parseUnits } from "viem";
+
 import { GAME_ITEMS_ADDRESS, MZCAL_TOKEN_ADDRESS } from "../config/contracts";
 import GameItemsABI from "../config/GameItems_ABI.json";
 import { MZCAL_TOKEN_ABI } from "../config/abi";

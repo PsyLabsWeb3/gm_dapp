@@ -92,14 +92,20 @@ export function Mint() {
   useEffect(() => {
     if (approveError) {
       // Extract a cleaner error message if possible
-      const msg = (approveError as any).shortMessage || approveError.message || "Approval failed";
+      const msg =
+        (approveError as any).shortMessage ||
+        approveError.message ||
+        "Approval failed";
       setActiveError(msg);
     }
   }, [approveError]);
 
   useEffect(() => {
     if (mintError) {
-      const msg = (mintError as any).shortMessage || mintError.message || "Minting failed";
+      const msg =
+        (mintError as any).shortMessage ||
+        mintError.message ||
+        "Minting failed";
       setActiveError(msg);
     }
   }, [mintError]);
@@ -109,7 +115,9 @@ export function Mint() {
     if (isApprovedTx) {
       refetchApproval();
       setActiveError(null);
-      setActiveSuccess("MZCAL tokens approved successfully! You can now summon your warrior.");
+      setActiveSuccess(
+        "MZCAL tokens approved successfully! You can now summon your warrior.",
+      );
     }
   }, [isApprovedTx, refetchApproval]);
 
@@ -119,7 +127,9 @@ export function Mint() {
       refetchBalance();
       refreshInventory();
       setActiveError(null);
-      setActiveSuccess("Warrior summoned successfully! Check your inventory below.");
+      setActiveSuccess(
+        "Warrior summoned successfully! Check your inventory below.",
+      );
     }
   }, [isMintSuccess, refetchBalance, refreshInventory]);
 
