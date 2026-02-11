@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { ConnectButton } from './ConnectButton'
-import iconLogo from '../assets/icon.webp'
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ConnectButton } from "./ConnectButton";
+import iconLogo from "../assets/icon.webp";
 
 export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const location = useLocation()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
-    <nav className="bg-black" style={{ borderBottom: '1px solid #E8B467' }}>
+    <nav className="bg-black" style={{ borderBottom: "1px solid #E8B467" }}>
       <div className="w-full px-4 md:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -26,13 +26,13 @@ export function Navbar() {
               to="/mzcal"
               className="hover:text-[#F9B064] transition-colors font-normal"
               style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '20px',
-                fontStyle: 'normal',
-                fontWeight: '700',
-                lineHeight: 'normal',
-                color: location.pathname === '/mzcal' ? '#F9B064' : '#F9B064',
-                textShadow: '0 0 10px rgba(249, 176, 100, 0.5)',
+                fontFamily: "Inter, sans-serif",
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontWeight: "700",
+                lineHeight: "normal",
+                color: location.pathname === "/mzcal" ? "#F9B064" : "#F9B064",
+                textShadow: "0 0 10px rgba(249, 176, 100, 0.5)",
               }}
             >
               $MZCAL
@@ -41,26 +41,41 @@ export function Navbar() {
               to="/mint"
               className="hover:text-[#F9B064] transition-colors font-normal"
               style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '20px',
-                fontStyle: 'normal',
-                fontWeight: '400',
-                lineHeight: 'normal',
-                color: location.pathname === '/mint' ? '#F9B064' : '#FFFFFF'
+                fontFamily: "Inter, sans-serif",
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontWeight: "400",
+                lineHeight: "normal",
+                color: location.pathname === "/mint" ? "#F9B064" : "#FFFFFF",
               }}
             >
               Mint
             </Link>
             <Link
+              to="/rewards"
+              className="hover:text-[#F9B064] transition-colors font-normal"
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontWeight: "400",
+                lineHeight: "normal",
+                color: location.pathname === "/rewards" ? "#F9B064" : "#FFFFFF",
+              }}
+            >
+              Rewards
+            </Link>
+            <Link
               to="/marketplace"
               className="hover:text-[#F9B064] transition-colors font-normal"
               style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '20px',
-                fontStyle: 'normal',
-                fontWeight: '900',
-                lineHeight: 'normal',
-                color: location.pathname === '/marketplace' ? '#F9B064' : '#FFFFFF'
+                fontFamily: "Inter, sans-serif",
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontWeight: "900",
+                lineHeight: "normal",
+                color:
+                  location.pathname === "/marketplace" ? "#F9B064" : "#FFFFFF",
               }}
             >
               Marketplace
@@ -81,12 +96,32 @@ export function Navbar() {
               aria-label="Toggle menu"
             >
               {isMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               )}
             </button>
@@ -101,7 +136,7 @@ export function Navbar() {
                 to="/mzcal"
                 onClick={() => setIsMenuOpen(false)}
                 className="text-[#F9B064] hover:text-[#f0d576] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50 font-bold"
-                style={{ textShadow: '0 0 10px rgba(249, 176, 100, 0.5)' }}
+                style={{ textShadow: "0 0 10px rgba(249, 176, 100, 0.5)" }}
               >
                 $MZCAL
               </Link>
@@ -111,6 +146,13 @@ export function Navbar() {
                 className="text-white hover:text-[#d4af37] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50"
               >
                 Mint
+              </Link>
+              <Link
+                to="/rewards"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-white hover:text-[#d4af37] transition-colors text-sm py-2 border-b border-[#3a3a3a]/50"
+              >
+                Rewards
               </Link>
               <Link
                 to="/marketplace"
@@ -124,5 +166,5 @@ export function Navbar() {
         )}
       </div>
     </nav>
-  )
+  );
 }

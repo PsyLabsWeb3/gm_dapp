@@ -148,7 +148,7 @@ function getRarityColor(rarity?: string): string {
     rare: "#0070DD",
     epic: "#A335EE",
     legendary: "#FF8000",
-    mythic: "#FF0000",
+    mythic: "#ffcc00",
   };
 
   return colorMap[rarity.toLowerCase()] || "#888888";
