@@ -3,30 +3,30 @@
  * Shows image, name, rarity, balance, and attributes
  */
 
-import type { GameItem } from '../lib/erc1155'
+import type { GameItem } from "../lib/erc1155";
 
 interface NftCardProps {
-  item: GameItem
-  onClick?: () => void
-  className?: string
+  item: GameItem;
+  onClick?: () => void;
+  className?: string;
 }
 
-export function NftCard({ item, onClick, className = '' }: NftCardProps) {
-  const rarityColor = getRarityColor(item.rarity)
+export function NftCard({ item, onClick, className = "" }: NftCardProps) {
+  const rarityColor = getRarityColor(item.rarity);
 
   return (
     <div
       onClick={onClick}
       className={`
         rounded-2xl p-4 cursor-pointer transition-transform hover:scale-105
-        ${onClick ? 'hover:shadow-lg' : ''}
+        ${onClick ? "hover:shadow-lg" : ""}
         ${className}
       `}
       style={{
-        background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+        background: "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)",
         border: `2px solid ${rarityColor}40`,
-        position: 'relative',
-        overflow: 'hidden',
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       {/* Gradient border effect */}
@@ -42,7 +42,7 @@ export function NftCard({ item, onClick, className = '' }: NftCardProps) {
       <div
         className="w-full h-48 mb-3 rounded-lg overflow-hidden bg-black/50 flex items-center justify-center"
         style={{
-          aspectRatio: '1 / 1',
+          aspectRatio: "1 / 1",
         }}
       >
         {item.image ? (
@@ -51,11 +51,14 @@ export function NftCard({ item, onClick, className = '' }: NftCardProps) {
             alt={item.name || `Token #${item.tokenId}`}
             className="w-full h-full object-cover"
             onError={(e) => {
-              e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23333" width="200" height="200"/%3E%3Ctext x="50%" y="50%" font-size="16" fill="%23999" text-anchor="middle" dy=".3em"%3EImage not found%3C/text%3E%3C/svg%3E'
+              e.currentTarget.src =
+                'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23333" width="200" height="200"/%3E%3Ctext x="50%" y="50%" font-size="16" fill="%23999" text-anchor="middle" dy=".3em"%3EImage not found%3C/text%3E%3C/svg%3E';
             }}
           />
         ) : (
-          <div className="text-gray-400 text-center text-sm">No image available</div>
+          <div className="text-gray-400 text-center text-sm">
+            No image available
+          </div>
         )}
       </div>
 
@@ -66,7 +69,7 @@ export function NftCard({ item, onClick, className = '' }: NftCardProps) {
           <h3
             className="font-bold text-sm truncate"
             style={{
-              color: '#FFFFFF',
+              color: "#FFFFFF",
               fontFamily: "'Cinzel', serif",
             }}
           >
@@ -81,7 +84,10 @@ export function NftCard({ item, onClick, className = '' }: NftCardProps) {
             fontFamily: "'Courier New', monospace",
           }}
         >
-          #{typeof item.tokenId === 'bigint' ? item.tokenId.toString() : item.tokenId}
+          #
+          {typeof item.tokenId === "bigint"
+            ? item.tokenId.toString()
+            : item.tokenId}
         </p>
 
         {/* Rarity Badge */}
@@ -106,7 +112,8 @@ export function NftCard({ item, onClick, className = '' }: NftCardProps) {
               fontFamily: "'Courier New', monospace",
             }}
           >
-            Balance: <span className="font-semibold">{item.balance.toString()}</span>
+            Balance:{" "}
+            <span className="font-semibold">{item.balance.toString()}</span>
           </p>
         )}
 
@@ -114,7 +121,10 @@ export function NftCard({ item, onClick, className = '' }: NftCardProps) {
         {item.attributes && item.attributes.length > 0 && (
           <div className="space-y-1 mt-3 border-t border-gray-600 pt-2">
             {item.attributes.map((attr, idx) => (
-              <div key={idx} className="flex justify-between text-xs text-gray-300">
+              <div
+                key={idx}
+                className="flex justify-between text-xs text-gray-300"
+              >
                 <span className="text-gray-400">{attr.trait_type}</span>
                 <span className="font-semibold">{attr.value}</span>
               </div>
@@ -123,23 +133,23 @@ export function NftCard({ item, onClick, className = '' }: NftCardProps) {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 /**
  * Map rarity values to colors
  */
 function getRarityColor(rarity?: string): string {
-  if (!rarity) return '#888888'
+  if (!rarity) return "#888888";
 
   const colorMap: Record<string, string> = {
-    'common': '#A8A9AD',
-    'uncommon': '#1EFF00',
-    'rare': '#0070DD',
-    'epic': '#A335EE',
-    'legendary': '#FF8000',
-    'mythic': '#FF0000',
-  }
+    common: "#A8A9AD",
+    uncommon: "#1EFF00",
+    rare: "#0070DD",
+    epic: "#A335EE",
+    legendary: "#FF8000",
+    mythic: "#FF0000",
+  };
 
-  return colorMap[rarity.toLowerCase()] || '#888888'
+  return colorMap[rarity.toLowerCase()] || "#888888";
 }
