@@ -17,6 +17,10 @@ interface MintingConsoleProps {
   userBalance?: number;
   maxQuantity?: number;
   isConnected?: boolean;
+  errorMessage?: string;
+  onClearError?: () => void;
+  successMessage?: string;
+  onClearSuccess?: () => void;
 }
 
 export function MintingConsole({
@@ -30,6 +34,10 @@ export function MintingConsole({
   userBalance = 0,
   maxQuantity = 10,
   isConnected = false,
+  errorMessage,
+  onClearError,
+  successMessage,
+  onClearSuccess,
 }: MintingConsoleProps) {
   const [quantity, setQuantity] = useState(1);
   const totalPrice = quantity * pricePerMint;
@@ -236,6 +244,122 @@ export function MintingConsole({
           </div>
         )}
       </div>
+
+      {/* Error Message */}
+      {errorMessage && (
+        <div
+          className="mb-4 p-3 rounded-xl flex items-start gap-2 relative group"
+          style={{
+            background: "rgba(255, 68, 68, 0.1)",
+            border: "1px solid rgba(255, 68, 68, 0.3)",
+          }}
+        >
+          <div className="flex-1">
+            <div
+              style={{
+                color: "#ff4444",
+                fontFamily: "Lato, sans-serif",
+                fontSize: "12px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+                marginBottom: "2px",
+              }}
+            >
+              Summoning Error
+            </div>
+            <div
+              style={{
+                color: "rgba(255, 255, 255, 0.9)",
+                fontFamily: "Lato, sans-serif",
+                fontSize: "13px",
+                lineHeight: "1.4",
+              }}
+            >
+              {errorMessage}
+            </div>
+          </div>
+          {onClearError && (
+            <button
+              onClick={onClearError}
+              className="text-white/40 hover:text-white/90 transition-colors bg-transparent border-none cursor-pointer p-1"
+              title="Clear error"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Success Message */}
+      {successMessage && (
+        <div
+          className="mb-4 p-3 rounded-xl flex items-start gap-2 relative"
+          style={{
+            background: "rgba(74, 222, 128, 0.1)",
+            border: "1px solid rgba(74, 222, 128, 0.3)",
+          }}
+        >
+          <div className="flex-1">
+            <div
+              style={{
+                color: "#4ade80",
+                fontFamily: "Lato, sans-serif",
+                fontSize: "12px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+                marginBottom: "2px",
+              }}
+            >
+              Holy Success
+            </div>
+            <div
+              style={{
+                color: "rgba(255, 255, 255, 0.9)",
+                fontFamily: "Lato, sans-serif",
+                fontSize: "13px",
+                lineHeight: "1.4",
+              }}
+            >
+              {successMessage}
+            </div>
+          </div>
+          {onClearSuccess && (
+            <button
+              onClick={onClearSuccess}
+              className="text-white/40 hover:text-white/90 transition-colors bg-transparent border-none cursor-pointer p-1"
+              title="Clear message"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Action Button */}
       <button

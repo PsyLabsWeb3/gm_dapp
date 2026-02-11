@@ -32,6 +32,8 @@ export function Mint() {
   const { address } = useAccount();
   const [tokenIds, setTokenIds] = useState<number[]>([]);
   const [loadingTokenIds, setLoadingTokenIds] = useState(true);
+  const [activeError, setActiveError] = useState<string | null>(null);
+  const [activeSuccess, setActiveSuccess] = useState<string | null>(null);
 
   // Mint price and balance
   const { mintPrice } = useMintPriceMzcal();
@@ -45,12 +47,14 @@ export function Mint() {
     isPending: isApproving,
     isConfirming: isApprovingConfirming,
     isSuccess: isApprovedTx,
+    error: approveError,
   } = useApproveGameItems();
   const {
     mintGacha,
     isPending: isMinting,
     isConfirming: isMintingConfirming,
     isSuccess: isMintSuccess,
+    error: mintError,
   } = useMintGacha();
 
   // Load token IDs from public JSON file
@@ -84,10 +88,28 @@ export function Mint() {
     concurrencyLimit: 8,
   });
 
+  // Handle errors from hooks
+  useEffect(() => {
+    if (approveError) {
+      // Extract a cleaner error message if possible
+      const msg = (approveError as any).shortMessage || approveError.message || "Approval failed";
+      setActiveError(msg);
+    }
+  }, [approveError]);
+
+  useEffect(() => {
+    if (mintError) {
+      const msg = (mintError as any).shortMessage || mintError.message || "Minting failed";
+      setActiveError(msg);
+    }
+  }, [mintError]);
+
   // Handle successful approval
   useEffect(() => {
     if (isApprovedTx) {
       refetchApproval();
+      setActiveError(null);
+      setActiveSuccess("MZCAL tokens approved successfully! You can now summon your warrior.");
     }
   }, [isApprovedTx, refetchApproval]);
 
@@ -96,6 +118,8 @@ export function Mint() {
     if (isMintSuccess) {
       refetchBalance();
       refreshInventory();
+      setActiveError(null);
+      setActiveSuccess("Warrior summoned successfully! Check your inventory below.");
     }
   }, [isMintSuccess, refetchBalance, refreshInventory]);
 
@@ -113,11 +137,15 @@ export function Mint() {
       return;
     }
 
+    setActiveError(null);
+    setActiveSuccess(null);
     // Call mintGacha from contract
     mintGacha(quantity);
   };
 
   const handleApprove = () => {
+    setActiveError(null);
+    setActiveSuccess(null);
     approve();
   };
 
@@ -154,6 +182,10 @@ export function Mint() {
             }
             maxQuantity={10}
             isConnected={!!address}
+            errorMessage={activeError || undefined}
+            onClearError={() => setActiveError(null)}
+            successMessage={activeSuccess || undefined}
+            onClearSuccess={() => setActiveSuccess(null)}
           />
         </div>
 

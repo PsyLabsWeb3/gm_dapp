@@ -190,9 +190,28 @@ export function useUserGameItemsInventory({
   }, []);
 
   useEffect(() => {
-    const token87 = items.find(i => i.tokenId === 87);
-    console.log("Token 87 item:", token87);
-    console.log("Token 87 image:", token87?.image);
+    if (!items.length) return;
+
+    const withImage = items.filter((i) => !!i.image);
+    const missingImage = items.filter((i) => !i.image);
+
+    console.log(`[Inventory UI] items=${items.length}`);
+    console.log(
+      `[Inventory UI] withImage=${withImage.length}, missingImage=${missingImage.length}`,
+    );
+
+    if (missingImage.length > 0) {
+      console.warn(
+        `[Inventory UI] Missing images for tokenIds:`,
+        missingImage.map((i) => ({
+          tokenId: i.tokenId,
+          name: i.name,
+          metadataUrl: i.metadataUrl,
+          rawImage: (i as any)?.rawImage, // only if you add it (see below)
+          resolvedImage: i.image,
+        })),
+      );
+    }
   }, [items]);
 
   // Main effect: fetch all chunks and metadata

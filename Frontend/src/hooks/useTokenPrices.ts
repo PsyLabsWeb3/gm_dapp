@@ -1,7 +1,7 @@
-import { useReadContract } from 'wagmi'
-import { MZCAL_TOKEN_ADDRESS } from '../config/contracts'
-import { MZCAL_TOKEN_ABI } from '../config/abi'
-import { formatEther } from 'viem'
+import { useReadContract } from "wagmi";
+import { MZCAL_TOKEN_ADDRESS } from "../config/contracts";
+import { MZCAL_TOKEN_ABI } from "../config/abi";
+import { formatEther } from "viem";
 
 /**
  * Hook to get the presale token price
@@ -11,14 +11,14 @@ export function usePresaleTokenPrice() {
   const result = useReadContract({
     address: MZCAL_TOKEN_ADDRESS,
     abi: MZCAL_TOKEN_ABI,
-    functionName: 'presaleTokenPrice',
-  })
+    functionName: "mzcalTokenPrice",
+  });
 
   return {
     ...result,
     priceInWei: result.data as bigint | undefined,
-    priceInEth: result.data ? formatEther(result.data as bigint) : '0',
-  }
+    priceInEth: result.data ? formatEther(result.data as bigint) : "0",
+  };
 }
 
 /**
@@ -29,14 +29,14 @@ export function useMzcalTokenPrice() {
   const result = useReadContract({
     address: MZCAL_TOKEN_ADDRESS,
     abi: MZCAL_TOKEN_ABI,
-    functionName: 'mzcalTokenPrice',
-  })
+    functionName: "mzcalTokenPrice",
+  });
 
   return {
     ...result,
     priceInWei: result.data as bigint | undefined,
-    priceInEth: result.data ? formatEther(result.data as bigint) : '0',
-  }
+    priceInEth: result.data ? formatEther(result.data as bigint) : "0",
+  };
 }
 
 /**
@@ -47,6 +47,6 @@ export function useMzcalTokenLaunched() {
   return useReadContract({
     address: MZCAL_TOKEN_ADDRESS,
     abi: MZCAL_TOKEN_ABI,
-    functionName: 'mzcalTokenLaunched',
-  })
+    functionName: "mzcalTokenLaunched",
+  });
 }

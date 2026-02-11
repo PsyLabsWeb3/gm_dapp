@@ -377,6 +377,12 @@ function BuyTab() {
   const { buyPresale, isPending, isConfirming, isSuccess, error, hash } =
     useBuyPresale();
 
+  // DEBUG LOGS
+  useEffect(() => {
+    console.log('[BuyTab DEBUG] priceInEth:', priceInEth);
+    console.log('[BuyTab DEBUG] priceInWei:', priceInWei?.toString());
+  }, [priceInEth, priceInWei]);
+
   // Toast effects
   useEffect(() => {
     const timer = setTimeout(() => {
